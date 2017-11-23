@@ -9,6 +9,14 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', [function() {
+.controller('View1Ctrl', function($scope, $http) {
+    $http.get('data/nationalChargePointRegistry.json').then(successCallback, errorCallback);
 
-}]);
+    function successCallback(response) {
+        console.log();
+    }
+
+    function errorCallback(response) {
+        console.log();
+    }
+});
