@@ -9,7 +9,9 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', function($scope, $http) {
+.controller('View1Ctrl', function($scope, $http, uiGmapGoogleMapApi) {
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
     $http.get('data/nationalChargePointRegistry.json').then(successCallback, errorCallback);
 
     function successCallback(response) {
@@ -19,4 +21,8 @@ angular.module('myApp.view1', ['ngRoute'])
     function errorCallback(response) {
         console.log();
     }
+
+    uiGmapGoogleMapApi.then(function(maps) {
+        console.log();
+    });
 });
