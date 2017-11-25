@@ -1,27 +1,14 @@
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+html,
+body {
+    height: 100%;
 }
 
-.menu:before {
-  content: "[";
-}
-
-.menu:after {
-  content: "]";
-}
-
-.menu > li {
-  display: inline;
-}
-
-.menu > li + li:before {
-  content: "|";
-  padding-right: 0.3em;
-}
-
+.angular-google-map,
 .angular-google-map-container {
-    height: 400px;
+    width: 100%;
+    height: 100%;
+}
+
+.evcl-full-height {
+    height: 100%;
 }
