@@ -127,16 +127,16 @@ angular.module('myApp.view1', [
             },
             options: {
                 title: chargeDevice.ChargeDeviceName,
-                icon: 'images/red-dot.png'
+                icon: 'images/blue-dot.png'
             },
             events: {
                 click: function (marker) {
                     $scope.selectedChargeDevice = $scope.chargeDevices[marker.key];
-                    marker.setIcon('images/green-dot.png');
+                    marker.setIcon('images/red-dot.png');
 
                     // Reset icon on previously set marker
                     if ($scope.selectedMarkerObj) {
-                        $scope.selectedMarkerObj.setIcon('images/red-dot.png');
+                        $scope.selectedMarkerObj.setIcon('images/blue-dot.png');
                     }
 
                     $scope.selectedMarkerObj = marker;
