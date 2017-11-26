@@ -9,7 +9,7 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', function($scope, $http, uiGmapGoogleMapApi) {
+.controller('View1Ctrl', function($scope, $http) {
 
     init();
 
@@ -79,7 +79,7 @@ angular.module('myApp.view1', ['ngRoute'])
         // TODO failed to GET data file
     }
 
-    uiGmapGoogleMapApi.then(function(maps) {
-        console.log();
-    });
+    // uiGmapGoogleMapApi.then(function(maps) {
+    //     console.log();
+    // });
 });
