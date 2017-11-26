@@ -1,7 +1,8 @@
 <div class="evcl-full-height evcl-flex">
     <ui-gmap-google-map class="evcl-full-height"
                         center='map.center'
-                        zoom='map.zoom'>
+                        zoom='map.zoom'
+                        events="map.events">
         <ui-gmap-marker
                 ng-repeat="marker in markers"
                 coords="marker.coords"
@@ -13,6 +14,7 @@
 
     <charging-location-info-pane
             data="selectedChargeDevice"
+            show-directions-callback="showDirections"
             class="evcl-full-height">
     </charging-location-info-pane>
 </div>

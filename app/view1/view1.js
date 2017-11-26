@@ -12,10 +12,13 @@ angular.module('myApp.view1', [
   });
 }])
 
-.controller('View1Ctrl', function($scope, $http) {
+.controller('View1Ctrl', function($scope, $http, uiGmapGoogleMapApi) {
 
     init();
 
+    /**
+     * Init controller's scope variables and GET charge device data
+     */
     function init() {
         // Default map options
         $scope.map = {
@@ -23,7 +26,12 @@ angular.module('myApp.view1', [
                 latitude: 45,
                 longitude: -73
             },
-            zoom: 8
+            zoom: 8,
+            events: {
+                tilesloaded: function (map) {
+                    $scope.mapObj = map;
+                }
+            }
         };
         // Full data object
         $scope.chargeDevices = null;
@@ -33,20 +41,40 @@ angular.module('myApp.view1', [
         $scope.selectedChargeDevice = null;
         // User selected marker obj
         $scope.selectedMarkerObj = null;
+        // User's geolocation
+        $scope.geolocation = null;
+        // Map obj
+        $scope.mapObj = null;
 
         centerMapOnGeolocation();
 
         $http.get('data/nationalChargePointRegistry.json').then(successCallback, errorCallback);
     }
 
+    /**
+     * Attempt to get user's geolocation so we can center the map on these coordinates
+     */
     function centerMapOnGeolocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(centerMap, geolocationPermissionDenied);
+            navigator.geolocation.getCurrentPosition(geolocationPermissionGranted, geolocationPermissionDenied);
         } else {
-            // TODO geolocation is not supported by this browser
+            alert('Geolocation is not supported by browser. Map will centre at default coordinates.');
         }
     }
 
+    /**
+     * Geolocation permission granted
+     * @param position
+     */
+    function geolocationPermissionGranted(position) {
+        $scope.geolocation = position;
+        centerMap(position);
+    }
+
+    /**
+     * Center map on given position
+     * @param position
+     */
     function centerMap(position) {
         $scope.map.center = {
             latitude: position.coords.latitude,
@@ -57,10 +85,17 @@ angular.module('myApp.view1', [
         $scope.$apply();
     }
 
+    /**
+     * Geolocation permission denied
+     */
     function geolocationPermissionDenied() {
-        // TODO
+        alert('Geolocation permission denied. Map will centre at default coordinates.');
     }
 
+    /**
+     * Parse charge device data to create markers on the map
+     * @param response
+     */
     function successCallback(response) {
         $scope.chargeDevices = response.data.ChargeDevice;
         $scope.markers = [];
@@ -76,6 +111,12 @@ angular.module('myApp.view1', [
         }
     }
 
+    /**
+     * Create marker object using the charge device data
+     * @param chargeDevice
+     * @param index
+     * @returns {}
+     */
     function createMarkerObject(chargeDevice, index) {
         return {
             // Set the id as the array index for easy retrieval of the device data when marker is clicked
@@ -104,11 +145,39 @@ angular.module('myApp.view1', [
         };
     }
 
-    function errorCallback(response) {
-        // TODO failed to GET data file
+    /**
+     * Failed to GET data file
+     */
+    function errorCallback() {
+        alert('Error - Failed to retrieve data.');
     }
 
-    // uiGmapGoogleMapApi.then(function(maps) {
-    //     console.log();
-    // });
+    // Promise when Google Maps SDK is fully ready
+    uiGmapGoogleMapApi.then(function() {
+        // Init google map objects for directions
+        let directionsDisplay = new google.maps.DirectionsRenderer();
+        let directionsService = new google.maps.DirectionsService();
+
+        /**
+         * Show directions to the given destination on the map
+         * @param destination - <latitude>,<longitude>
+         */
+        $scope.showDirections = function(destination) {
+            let request = {
+                origin: $scope.geolocation.coords.latitude + ',' + $scope.geolocation.coords.longitude,
+                destination: destination,
+                travelMode: google.maps.DirectionsTravelMode.DRIVING
+            };
+
+            directionsService.route(request, function (response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                    directionsDisplay.setMap($scope.mapObj);
+                }
+                else {
+                    alert('Error - Failed to retrieve directions.');
+                }
+            });
+        };
+    });
 });

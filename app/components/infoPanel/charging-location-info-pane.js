@@ -7,10 +7,21 @@ angular.module('myApp.chargingLocationInfoPane', [])
         templateUrl : 'components/infoPanel/charging-location-info-pane.html',
         restrict : 'E',
         scope: {
-            chargingLocationData: '=data'
+            chargingLocationData: '=data',
+            showDirectionsCallback: '='
         },
         controller: function($scope) {
-            console.log();
+
+            /**
+             * Call parent controller function to show directions to selected charge device
+             */
+            $scope.showDirections = function() {
+                let destination = $scope.chargingLocationData.ChargeDeviceLocation.Latitude
+                    + ','
+                    + $scope.chargingLocationData.ChargeDeviceLocation.Longitude;
+
+                $scope.showDirectionsCallback(destination);
+            };
         }
     };
 });
