@@ -24,17 +24,26 @@ body {
 }
 
 .evcl-app-title {
-    font-family: fantasy;
-    font-size: 30px;
-    margin-left: 20px;
+    font-family: serif;
+    font-size: 23px;
+    margin-left: 15px;
     color: #a3ccff;
+    font-variant: small-caps;
 }
 
 .evcl-app-icon {
-    height: 50px;
+    height: 45px;
 }
 
 .evcl-flex-align-center {
     display: flex;
     align-items: center;
+}
+
+.evcl-ng-view-container {
+    flex: 1;
+}
+
+.evcl-border-solid {
+    border: 1px solid black;
 }

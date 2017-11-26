@@ -14,6 +14,7 @@ angular.module('myApp.view1', ['ngRoute'])
     init();
 
     function init() {
+        // Default map options
         $scope.map = {
             center: {
                 latitude: 45,
@@ -21,6 +22,14 @@ angular.module('myApp.view1', ['ngRoute'])
             },
             zoom: 8
         };
+        // Full data object
+        $scope.chargeDevices = null;
+        // All markers
+        $scope.markers = null;
+        // User selected charge device data
+        $scope.selectedChargeDevice = null;
+        // User selected marker obj
+        $scope.selectedMarkerObj = null;
 
         centerMapOnGeolocation();
 
@@ -41,6 +50,7 @@ angular.module('myApp.view1', ['ngRoute'])
             longitude: position.coords.longitude
         };
 
+        // Need a scope apply here as this function is called outside of angular 'environment'
         $scope.$apply();
     }
 
@@ -49,28 +59,44 @@ angular.module('myApp.view1', ['ngRoute'])
     }
 
     function successCallback(response) {
+        $scope.chargeDevices = response.data.ChargeDevice;
         $scope.markers = [];
 
-        for (let i = 0; i < response.data.ChargeDevice.length; i++) {
-            let chargeDevice = response.data.ChargeDevice[i];
+        for (let index = 0; index < $scope.chargeDevices.length; index++) {
+            let chargeDevice = $scope.chargeDevices[index];
 
             // We are only showing charging locations that are free from access restrictions and which
             // do not require a subscription
             if (!chargeDevice.AccessRestrictionFlag && !chargeDevice.SubscriptionRequiredFlag) {
-                $scope.markers.push(createMarkerObject(chargeDevice));
+                $scope.markers.push(createMarkerObject(chargeDevice, index));
             }
         }
     }
 
-    function createMarkerObject(chargeDevice) {
+    function createMarkerObject(chargeDevice, index) {
         return {
-            id: chargeDevice.ChargeDeviceId,
+            // Set the id as the array index for easy retrieval of the device data when marker is clicked
+            id: index,
             coords: {
                 latitude: chargeDevice.ChargeDeviceLocation.Latitude,
                 longitude: chargeDevice.ChargeDeviceLocation.Longitude
             },
             options: {
-                title: chargeDevice.ChargeDeviceName
+                title: chargeDevice.ChargeDeviceName,
+                icon: 'images/red-dot.png'
+            },
+            events: {
+                click: function (marker) {
+                    $scope.selectedChargeDevice = $scope.chargeDevices[marker.key];
+                    marker.setIcon('images/green-dot.png');
+
+                    // Reset icon on previously set marker
+                    if ($scope.selectedMarkerObj) {
+                        $scope.selectedMarkerObj.setIcon('images/red-dot.png');
+                    }
+
+                    $scope.selectedMarkerObj = marker;
+                }
             }
         };
     }
