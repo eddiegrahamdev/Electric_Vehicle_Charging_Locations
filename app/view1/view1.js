@@ -48,7 +48,7 @@ angular.module('myApp.view1', [
 
         centerMapOnGeolocation();
 
-        $http.get('data/nationalChargePointRegistry.json').then(successCallback, errorCallback);
+        $http.get('data/national_charge_point_registry/registry.json').then(successCallback, errorCallback);
     }
 
     /**
