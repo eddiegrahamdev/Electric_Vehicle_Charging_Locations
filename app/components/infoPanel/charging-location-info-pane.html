@@ -31,7 +31,7 @@
         <table class="evcl-info-segment">
             <!-- 24 hour access -->
             <tr>
-                <td class="evcl-info-segment-title">24 hour access</td>
+                <td style="padding-left: 0px !important;" class="evcl-info-segment-title">24 hour access</td>
                 <td>
                     <img ng-if="chargingLocationData.Accessible24Hours" class="evcl-info-icon" src="images/tick.png" alt="Tick"/>
                     <img ng-if="!chargingLocationData.Accessible24Hours" class="evcl-info-icon" src="images/x.png" alt="X"/>
@@ -39,7 +39,7 @@
             </tr>
             <!-- Payment required -->
             <tr>
-                <td class="evcl-info-segment-title">Payment required</td>
+                <td style="padding-left: 0px !important;" class="evcl-info-segment-title">Payment required</td>
                 <td>
                     <img ng-if="chargingLocationData.PaymentRequiredFlag" class="evcl-info-icon" src="images/tick.png" alt="Tick"/>
                     <img ng-if="!chargingLocationData.PaymentRequiredFlag" class="evcl-info-icon" src="images/x.png" alt="X"/>
@@ -54,15 +54,15 @@
                 <tr ng-repeat="connector in chargingLocationData.Connector">
                     <!-- Type -->
                     <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
-                        {{ connector.ConnectorType }}
+                        {{connector.ConnectorType}}
                     </td>
                     <!-- Method -->
                     <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
-                        {{ connector.ChargeMethod }}
+                        {{connector.ChargeMethod}}
                     </td>
                     <!-- Status -->
                     <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
-                        {{ connector.ChargePointStatus }}
+                        {{connector.ChargePointStatus}}
                     </td>
                 </tr>
             </table>
