@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.view1', [
+    'ngRoute',
+    'myApp.chargingLocationInfoPane'
+])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view1', {

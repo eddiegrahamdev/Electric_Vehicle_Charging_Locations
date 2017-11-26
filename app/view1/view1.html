@@ -1,4 +1,4 @@
-<div class="evcl-full-height">
+<div class="evcl-full-height evcl-flex">
     <ui-gmap-google-map class="evcl-full-height"
                         center='map.center'
                         zoom='map.zoom'>
@@ -10,4 +10,9 @@
                 idkey="marker.id">
         </ui-gmap-marker>
     </ui-gmap-google-map>
+
+    <charging-location-info-pane
+            data="selectedChargeDevice"
+            class="evcl-full-height">
+    </charging-location-info-pane>
 </div>
