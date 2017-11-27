@@ -155,24 +155,24 @@ angular.module('myApp.view1', [
     // Promise when Google Maps SDK is fully ready
     uiGmapGoogleMapApi.then(function() {
         // Init google map objects for directions
-        let directionsDisplay = new google.maps.DirectionsRenderer();
+        let directionsRenderer = new google.maps.DirectionsRenderer();
         let directionsService = new google.maps.DirectionsService();
 
         /**
          * Show directions to the given destination on the map
          * @param destination - <latitude>,<longitude>
          */
-        $scope.showDirections = function(destination) {
+        $scope.showDirections = function() {
             let request = {
                 origin: $scope.geolocation.coords.latitude + ',' + $scope.geolocation.coords.longitude,
-                destination: destination,
+                destination: $scope.selectedChargeDevice.ChargeDeviceLocation.Latitude + ',' + $scope.selectedChargeDevice.ChargeDeviceLocation.Longitude,
                 travelMode: google.maps.DirectionsTravelMode.DRIVING
             };
 
             directionsService.route(request, function (response, status) {
                 if (status === google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                    directionsDisplay.setMap($scope.mapObj);
+                    directionsRenderer.setDirections(response);
+                    directionsRenderer.setMap($scope.mapObj);
                 }
                 else {
                     alert('Error - Failed to retrieve directions.');
