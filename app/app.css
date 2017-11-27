@@ -53,8 +53,11 @@ body {
 }
 
 .evcl-charging-location-info-pane-container {
-    padding: 15px;
     width: 350px;
+}
+
+.evcl-charging-location-info-pane-child-container {
+    padding: 15px;
 }
 
 .evcl-info-segment {
@@ -81,4 +84,26 @@ table, td  {
 .evcl-table-border  {
     border: 1px solid grey;
     border-collapse: collapse;
+}
+
+.evcl-button {
+    background-color: #fd7567;
+    border: none;
+    color: white;
+    padding: 7px;
+}
+
+.evcl-button:hover {
+    filter: brightness(115%);
+}
+
+.evcl-device-name {
+    padding: 15px;
+    color: white;
+    text-align: center;
+    background-color: #fd7567;
+}
+
+.evcl-break-word {
+    word-break: break-all;
 }

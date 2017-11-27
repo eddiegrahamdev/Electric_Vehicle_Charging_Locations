@@ -20,17 +20,31 @@ angular.module('myApp.view1', [
      * Init controller's scope variables and GET charge device data
      */
     function init() {
-        // Default map options
+        // Default map options (Glasgow)
         $scope.map = {
             center: {
-                latitude: 45,
-                longitude: -73
+                latitude: 55.863357,
+                longitude: -4.251583
             },
-            zoom: 8,
+            zoom: 9,
             events: {
                 tilesloaded: function (map) {
                     $scope.mapObj = map;
                 }
+            }
+        };
+        // Marker events
+        $scope.markerEvents = {
+            click: function (marker) {
+                $scope.selectedChargeDevice = $scope.chargeDevices[marker.key];
+                marker.setIcon('images/red-dot.png');
+
+                // Reset icon on previously set marker (if different marker)
+                if ($scope.selectedMarkerObj && ($scope.selectedMarkerObj.key !== marker.key)) {
+                    $scope.selectedMarkerObj.setIcon('images/blue-dot.png');
+                }
+
+                $scope.selectedMarkerObj = marker;
             }
         };
         // Full data object
@@ -128,19 +142,6 @@ angular.module('myApp.view1', [
             options: {
                 title: chargeDevice.ChargeDeviceName,
                 icon: 'images/blue-dot.png'
-            },
-            events: {
-                click: function (marker) {
-                    $scope.selectedChargeDevice = $scope.chargeDevices[marker.key];
-                    marker.setIcon('images/red-dot.png');
-
-                    // Reset icon on previously set marker
-                    if ($scope.selectedMarkerObj) {
-                        $scope.selectedMarkerObj.setIcon('images/blue-dot.png');
-                    }
-
-                    $scope.selectedMarkerObj = marker;
-                }
             }
         };
     }

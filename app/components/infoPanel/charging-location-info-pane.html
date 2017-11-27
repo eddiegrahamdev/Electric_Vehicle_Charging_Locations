@@ -1,75 +1,73 @@
 <div class="evcl-charging-location-info-pane-container">
     <div ng-if="chargingLocationData">
         <!-- Device name-->
-        <div ng-if="chargingLocationData.ChargeDeviceName"
-             class="evcl-info-segment">
-            <div class="evcl-info-segment-title">Device Name:</div>
-            <div>{{chargingLocationData.ChargeDeviceName}}</div>
-        </div>
+        <div class="evcl-device-name evcl-break-word">{{chargingLocationData.ChargeDeviceName}}</div>
 
-        <!-- Address -->
-        <div ng-if="chargingLocationData.ChargeDeviceLocation.Address"
-             class="evcl-info-segment">
-            <div class="evcl-info-segment-title">Full address:</div>
-            <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.BuildingName">
-                {{chargingLocationData.ChargeDeviceLocation.Address.BuildingName}}
+        <div class="evcl-charging-location-info-pane-child-container">
+            <!-- Address -->
+            <div ng-if="chargingLocationData.ChargeDeviceLocation.Address"
+                 class="evcl-info-segment evcl-break-word">
+                <div class="evcl-info-segment-title">Full address:</div>
+                <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.BuildingName">
+                    {{chargingLocationData.ChargeDeviceLocation.Address.BuildingName}}
+                </div>
+                <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.Street">
+                    {{chargingLocationData.ChargeDeviceLocation.Address.Street}}
+                </div>
+                <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.PostTown">
+                    {{chargingLocationData.ChargeDeviceLocation.Address.PostTown}}
+                </div>
+                <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.County">
+                    {{chargingLocationData.ChargeDeviceLocation.Address.County}}
+                </div>
+                <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.PostCode">
+                    {{chargingLocationData.ChargeDeviceLocation.Address.PostCode}}
+                </div>
             </div>
-            <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.Street">
-                {{chargingLocationData.ChargeDeviceLocation.Address.Street}}
-            </div>
-            <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.PostTown">
-                {{chargingLocationData.ChargeDeviceLocation.Address.PostTown}}
-            </div>
-            <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.County">
-                {{chargingLocationData.ChargeDeviceLocation.Address.County}}
-            </div>
-            <div ng-if="chargingLocationData.ChargeDeviceLocation.Address.PostCode">
-                {{chargingLocationData.ChargeDeviceLocation.Address.PostCode}}
-            </div>
-        </div>
 
-        <table class="evcl-info-segment">
-            <!-- 24 hour access -->
-            <tr>
-                <td style="padding-left: 0px !important;" class="evcl-info-segment-title">24 hour access</td>
-                <td>
-                    <img ng-if="chargingLocationData.Accessible24Hours" class="evcl-info-icon" src="images/tick.png" alt="Tick"/>
-                    <img ng-if="!chargingLocationData.Accessible24Hours" class="evcl-info-icon" src="images/x.png" alt="X"/>
-                </td>
-            </tr>
-            <!-- Payment required -->
-            <tr>
-                <td style="padding-left: 0px !important;" class="evcl-info-segment-title">Payment required</td>
-                <td>
-                    <img ng-if="chargingLocationData.PaymentRequiredFlag" class="evcl-info-icon" src="images/tick.png" alt="Tick"/>
-                    <img ng-if="!chargingLocationData.PaymentRequiredFlag" class="evcl-info-icon" src="images/x.png" alt="X"/>
-                </td>
-            </tr>
-        </table>
-
-        <!-- Connectors -->
-        <div class="evcl-info-segment">
-            <div class="evcl-info-segment-title">Connectors:</div>
-            <table class="evcl-table-border">
-                <tr ng-repeat="connector in chargingLocationData.Connector">
-                    <!-- Type -->
-                    <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
-                        {{connector.ConnectorType}}
+            <table class="evcl-info-segment">
+                <!-- 24 hour access -->
+                <tr>
+                    <td style="padding-left: 0px !important;" class="evcl-info-segment-title">24 hour access</td>
+                    <td>
+                        <img ng-if="chargingLocationData.Accessible24Hours" class="evcl-info-icon" src="images/tick.png" alt="Tick"/>
+                        <img ng-if="!chargingLocationData.Accessible24Hours" class="evcl-info-icon" src="images/x.png" alt="X"/>
                     </td>
-                    <!-- Method -->
-                    <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
-                        {{connector.ChargeMethod}}
-                    </td>
-                    <!-- Status -->
-                    <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
-                        {{connector.ChargePointStatus}}
+                </tr>
+                <!-- Payment required -->
+                <tr>
+                    <td style="padding-left: 0px !important;" class="evcl-info-segment-title">Payment required</td>
+                    <td>
+                        <img ng-if="chargingLocationData.PaymentRequiredFlag" class="evcl-info-icon" src="images/tick.png" alt="Tick"/>
+                        <img ng-if="!chargingLocationData.PaymentRequiredFlag" class="evcl-info-icon" src="images/x.png" alt="X"/>
                     </td>
                 </tr>
             </table>
-        </div>
 
-        <button ng-click="showDirectionsCallback()">
-            Get Directions
-        </button>
+            <!-- Connectors -->
+            <div class="evcl-info-segment">
+                <div class="evcl-info-segment-title">Connectors:</div>
+                <table class="evcl-table-border">
+                    <tr ng-repeat="connector in chargingLocationData.Connector">
+                        <!-- Type -->
+                        <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
+                            {{connector.ConnectorType}}
+                        </td>
+                        <!-- Method -->
+                        <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
+                            {{connector.ChargeMethod}}
+                        </td>
+                        <!-- Status -->
+                        <td class="evcl-table-border" ng-class="{'evcl-table-row-odd' : $odd}">
+                            {{connector.ChargePointStatus}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <button class="evcl-button" ng-click="showDirectionsCallback()">
+                Get Directions
+            </button>
+        </div>
     </div>
 </div>

@@ -7,14 +7,13 @@
                 ng-repeat="marker in markers"
                 coords="marker.coords"
                 options="marker.options"
-                events="marker.events"
+                events="markerEvents"
                 idkey="marker.id">
         </ui-gmap-marker>
     </ui-gmap-google-map>
 
     <charging-location-info-pane
             data="selectedChargeDevice"
-            show-directions-callback="showDirections"
-            class="evcl-full-height">
+            show-directions-callback="showDirections">
     </charging-location-info-pane>
 </div>
