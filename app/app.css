@@ -107,3 +107,9 @@ table, td  {
 .evcl-break-word {
     word-break: break-all;
 }
+
+.evcl-info-pane-helper-txt {
+    padding: 80px;
+    text-align: center;
+    color: grey;
+}

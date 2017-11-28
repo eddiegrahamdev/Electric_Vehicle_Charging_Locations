@@ -9,9 +9,6 @@ angular.module('myApp.chargingLocationInfoPane', [])
         scope: {
             chargingLocationData: '=data',
             showDirectionsCallback: '='
-        },
-        controller: function($scope) {
-            console.log();
         }
     };
 });

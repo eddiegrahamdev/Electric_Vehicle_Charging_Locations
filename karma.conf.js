@@ -1,34 +1,42 @@
 //jshint strict: false
-module.exports = function(config) {
-  config.set({
+module.exports = function (config) {
+    config.set({
+        basePath: './app',
 
-    basePath: './app',
+        files: [
+            'bower_components/angular/angular.js',
+            'bower_components/angular-route/angular-route.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'components/**/*.js',
+            'views/**/*.js',
+            'components/**/*.html'
+        ],
 
-    files: [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-route/angular-route.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'components/**/*.js',
-      'view*/**/*.js'
-    ],
+        autoWatch: true,
 
-    autoWatch: true,
+        frameworks: ['jasmine'],
 
-    frameworks: ['jasmine'],
+        browsers: ['Chrome'],
 
-    browsers: ['Chrome'],
+        plugins: [
+            'karma-chrome-launcher',
+            'karma-firefox-launcher',
+            'karma-jasmine',
+            'karma-junit-reporter',
+            'karma-ng-html2js-preprocessor'
+        ],
 
-    plugins: [
-      'karma-chrome-launcher',
-      'karma-firefox-launcher',
-      'karma-jasmine',
-      'karma-junit-reporter'
-    ],
+        junitReporter: {
+            outputFile: 'test_out/unit.xml',
+            suite: 'unit'
+        },
 
-    junitReporter: {
-      outputFile: 'test_out/unit.xml',
-      suite: 'unit'
-    }
+        preprocessors: {
+            'components/**/*.html': ['ng-html2js']
+        },
 
-  });
+        ngHtml2JsPreprocessor: {
+            moduleName: 'templates'
+        }
+    });
 };

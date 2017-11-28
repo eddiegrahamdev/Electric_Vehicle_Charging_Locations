@@ -1,18 +1,18 @@
 'use strict';
 
-angular.module('myApp.view1', [
+angular.module('myApp.home', [
     'ngRoute',
     'myApp.chargingLocationInfoPane'
 ])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
+  $routeProvider.when('/home', {
+    templateUrl: 'views/home/home.html',
+    controller: 'HomeCtrl'
   });
 }])
 
-.controller('View1Ctrl', function($scope, $http, uiGmapGoogleMapApi) {
+.controller('HomeCtrl', function($scope, $http, uiGmapGoogleMapApi) {
 
     init();
 
@@ -114,13 +114,15 @@ angular.module('myApp.view1', [
         $scope.chargeDevices = response.data.ChargeDevice;
         $scope.markers = [];
 
-        for (let index = 0; index < $scope.chargeDevices.length; index++) {
-            let chargeDevice = $scope.chargeDevices[index];
+        if ($scope.chargeDevices && $scope.chargeDevices.length > 0) {
+            for (let index = 0; index < $scope.chargeDevices.length; index++) {
+                let chargeDevice = $scope.chargeDevices[index];
 
-            // We are only showing charging locations that are free from access restrictions and which
-            // do not require a subscription
-            if (!chargeDevice.AccessRestrictionFlag && !chargeDevice.SubscriptionRequiredFlag) {
-                $scope.markers.push(createMarkerObject(chargeDevice, index));
+                // We are only showing charging locations that are free from access restrictions and which
+                // do not require a subscription
+                if (!chargeDevice.AccessRestrictionFlag && !chargeDevice.SubscriptionRequiredFlag) {
+                    $scope.markers.push(createMarkerObject(chargeDevice, index));
+                }
             }
         }
     }
