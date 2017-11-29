@@ -83,7 +83,7 @@ app/                    --> all of the source files for the application
         about_test.js
   app.js                --> main application module
   index.html            --> app layout file (the main html template file of the app)
-karma.conf.js          --> config file for running unit tests with Karma
+karma.conf.js           --> config file for running unit tests with Karma
 ```
 
 ### Running Unit Tests

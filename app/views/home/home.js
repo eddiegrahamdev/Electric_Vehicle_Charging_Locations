@@ -17,7 +17,7 @@ angular.module('myApp.home', [
     init();
 
     /**
-     * Init controller's scope variables and GET charge device data
+     * Init controller's scope variables, functions and GET charge device data
      */
     function init() {
         // Default map options (Glasgow)
@@ -33,15 +33,19 @@ angular.module('myApp.home', [
                 }
             }
         };
+
         // Marker events
         $scope.markerEvents = {
             click: function (marker) {
                 $scope.selectedChargeDevice = $scope.chargeDevices[marker.key];
+                // Change marker icon on click and 'bring to front' with zIndex
                 marker.setIcon('images/red-dot.png');
+                marker.setZIndex(9999999999);
 
-                // Reset icon on previously set marker (if different marker)
+                // Reset icon and zIndex on previously set marker (if different marker)
                 if ($scope.selectedMarkerObj && ($scope.selectedMarkerObj.key !== marker.key)) {
                     $scope.selectedMarkerObj.setIcon('images/blue-dot.png');
+                    $scope.selectedMarkerObj.setZIndex($scope.selectedMarkerObj.key);
                 }
 
                 $scope.selectedMarkerObj = marker;
@@ -64,27 +68,34 @@ angular.module('myApp.home', [
         // Default selected connector type
         $scope.selectedConnectorType = 'Show All';
 
+        /**
+         * Nullify selected charge device if it does not contain selected connector type.
+         * Then filter markers by the selected connector type.
+         *
+         * 'Show All' is a keyword which will not do any filtering
+         */
+        $scope.selectedConnectorTypeChange = function() {
+            if ($scope.selectedChargeDevice && $scope.selectedConnectorType !== 'Show All') {
+
+                if (!isConnectorTypeContainedInChargeDevice($scope.selectedChargeDevice, $scope.selectedConnectorType)) {
+                    $scope.selectedChargeDevice = null;
+                }
+            }
+
+            filterMarkersByConnectorType($scope.selectedConnectorType);
+        };
+
+        /**
+         * This function will be overridden when the Google Maps SDK is loaded (see code below)
+         */
+        $scope.showDirections = function() {
+            alert('Google Maps has not fully loaded yet. Please try again in a few seconds.');
+        };
+
         centerMapOnGeolocation();
 
         $http.get('data/national_charge_point_registry/registry.json').then(successCallback, errorCallback);
     }
-
-    /**
-     * Nullify selected charge device if it does not contain selected connector type.
-     * Then filter markers by the selected connector type.
-     *
-     * 'Show All' is a keyword which will not do any filtering
-     */
-    $scope.selectedConnectorTypeChange = function() {
-        if ($scope.selectedChargeDevice && $scope.selectedConnectorType !== 'Show All') {
-
-            if (!isConnectorTypeContainedInChargeDevice($scope.selectedChargeDevice, $scope.selectedConnectorType)) {
-                $scope.selectedChargeDevice = null;
-            }
-        }
-
-        filterMarkersByConnectorType($scope.selectedConnectorType);
-    };
 
     /**
      * Attempt to get user's geolocation so we can center the map on these coordinates
@@ -139,7 +150,7 @@ angular.module('myApp.home', [
             for (let index = 0; index < $scope.chargeDevices.length; index++) {
                 let chargeDevice = $scope.chargeDevices[index];
 
-                // Find and store connector types
+                // Store connector types
                 if (chargeDevice.Connector && chargeDevice.Connector.length > 0) {
                     for (let j = 0; j < chargeDevice.Connector.length; j++) {
                         let connectorType = chargeDevice.Connector[j].ConnectorType;
@@ -176,7 +187,10 @@ angular.module('myApp.home', [
             },
             options: {
                 title: chargeDevice.ChargeDeviceName,
-                icon: 'images/blue-dot.png'
+                icon: 'images/blue-dot.png',
+                // Set the zIndex as the index value so we know what to revert it to when
+                // the user clicks on a new marker
+                zIndex: index
             }
         };
     }
@@ -235,6 +249,12 @@ angular.module('myApp.home', [
          * @param destination - <latitude>,<longitude>
          */
         $scope.showDirections = function() {
+            // If we do not have the user's geolocation data then abort
+            if (!$scope.geolocation) {
+                alert('Geolocation permission must be allowed to use this functionality.');
+                return;
+            }
+
             let request = {
                 origin: $scope.geolocation.coords.latitude + ',' + $scope.geolocation.coords.longitude,
                 destination: $scope.selectedChargeDevice.ChargeDeviceLocation.Latitude + ',' + $scope.selectedChargeDevice.ChargeDeviceLocation.Longitude,
