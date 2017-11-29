@@ -101,6 +101,11 @@ The easiest way to run the unit tests is to use the supplied npm script:
 npm test
 ```
 
+### Browser and Device Compatibility
+
+The app has been smoke testing against the cutting edge versions of Chrome, Edge and firefox.
+The app should also be responsive to devices with smaller viewports. This has been testing using Chrome's native device simulator.
+
 ## Contact
 
 For more information on AngularJS please check out [angularjs.org][angularjs].
