@@ -198,8 +198,12 @@ angular.module('myApp.home', [
             for (let index = 0; index < $scope.chargeDevices.length; index++) {
                 let chargeDevice = $scope.chargeDevices[index];
 
-                if (isConnectorTypeContainedInChargeDevice(chargeDevice, connectorType) || connectorType === 'Show All') {
-                    $scope.markers.push(createMarkerObject(chargeDevice, index));
+                // We are only showing charging locations that are free from access restrictions and which
+                // do not require a subscription
+                if (!chargeDevice.AccessRestrictionFlag && !chargeDevice.SubscriptionRequiredFlag) {
+                    if (isConnectorTypeContainedInChargeDevice(chargeDevice, connectorType) || connectorType === 'Show All') {
+                        $scope.markers.push(createMarkerObject(chargeDevice, index));
+                    }
                 }
             }
         }
