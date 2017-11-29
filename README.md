@@ -108,7 +108,7 @@ The app should also be responsive to devices with smaller viewports. This has be
 
 ## Contact
 
-For more information on AngularJS please check out [angularjs.org][angularjs].
+For more information please contact eddiegrahamdev@gmail.com.
 
 
 [angularjs]: https://angularjs.org/
