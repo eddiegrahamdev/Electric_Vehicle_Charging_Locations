@@ -77,22 +77,14 @@ app/                    --> all of the source files for the application
         home.html
         home.js
         home_test.js
-    about/
+    about/                  --> about view
         about.html
         about.js
         about_test.js
   app.js                --> main application module
   index.html            --> app layout file (the main html template file of the app)
 karma.conf.js          --> config file for running unit tests with Karma
-e2e-tests/            --> end-to-end tests
-  protractor-conf.js    --> Protractor config file
-  scenarios.js          --> end-to-end scenarios to be run by Protractor
 ```
-
-
-## Testing
-
-There are two kinds of tests in the `Electric_Vehicle_Charging_Locations` application: Unit tests and end-to-end tests.
 
 ### Running Unit Tests
 
@@ -101,28 +93,13 @@ which we run with the [Karma][karma] test runner. We provide a Karma configurati
 
 * The configuration is found at `karma.conf.js`.
 * The unit tests are found next to the code they are testing and have an `_test.js` suffix (e.g.
-  `homw_test.js`).
+  `home_test.js`).
 
 The easiest way to run the unit tests is to use the supplied npm script:
 
 ```
 npm test
 ```
-
-This script will start the Karma test runner to execute the unit tests. Moreover, Karma will start
-watching the source and test files for changes and then re-run the tests whenever any of them
-changes.
-This is the recommended strategy; if your unit tests are being run every time you save a file then
-you receive instant feedback on any changes that break the expected code functionality.
-
-You can also ask Karma to do a single run of the tests and then exit. This is useful if you want to
-check that a particular version of the code is operating as expected. The project contains a
-predefined script to do this:
-
-```
-npm run test-single-run
-```
-
 
 ## Contact
 
