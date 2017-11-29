@@ -59,11 +59,32 @@ angular.module('myApp.home', [
         $scope.geolocation = null;
         // Map obj
         $scope.mapObj = null;
+        // Connector types
+        $scope.connectorTypes = ['Show All'];
+        // Default selected connector type
+        $scope.selectedConnectorType = 'Show All';
 
         centerMapOnGeolocation();
 
         $http.get('data/national_charge_point_registry/registry.json').then(successCallback, errorCallback);
     }
+
+    /**
+     * Nullify selected charge device if it does not contain selected connector type.
+     * Then filter markers by the selected connector type.
+     *
+     * 'Show All' is a keyword which will not do any filtering
+     */
+    $scope.selectedConnectorTypeChange = function() {
+        if ($scope.selectedChargeDevice && $scope.selectedConnectorType !== 'Show All') {
+
+            if (!isConnectorTypeContainedInChargeDevice($scope.selectedChargeDevice, $scope.selectedConnectorType)) {
+                $scope.selectedChargeDevice = null;
+            }
+        }
+
+        filterMarkersByConnectorType($scope.selectedConnectorType);
+    };
 
     /**
      * Attempt to get user's geolocation so we can center the map on these coordinates
@@ -118,6 +139,18 @@ angular.module('myApp.home', [
             for (let index = 0; index < $scope.chargeDevices.length; index++) {
                 let chargeDevice = $scope.chargeDevices[index];
 
+                // Find and store connector types
+                if (chargeDevice.Connector && chargeDevice.Connector.length > 0) {
+                    for (let j = 0; j < chargeDevice.Connector.length; j++) {
+                        let connectorType = chargeDevice.Connector[j].ConnectorType;
+
+                        // Only add connector types which we have not already parsed
+                        if (!$scope.connectorTypes.includes(connectorType)) {
+                            $scope.connectorTypes.push(connectorType);
+                        }
+                    }
+                }
+
                 // We are only showing charging locations that are free from access restrictions and which
                 // do not require a subscription
                 if (!chargeDevice.AccessRestrictionFlag && !chargeDevice.SubscriptionRequiredFlag) {
@@ -153,6 +186,38 @@ angular.module('myApp.home', [
      */
     function errorCallback() {
         alert('Error - Failed to retrieve data.');
+    }
+
+    /**
+     * Filter the markers on the map showing only the ones which contain the selected connector type
+     */
+    function filterMarkersByConnectorType(connectorType) {
+        $scope.markers = [];
+
+        if ($scope.chargeDevices && $scope.chargeDevices.length > 0) {
+            for (let index = 0; index < $scope.chargeDevices.length; index++) {
+                let chargeDevice = $scope.chargeDevices[index];
+
+                if (isConnectorTypeContainedInChargeDevice(chargeDevice, connectorType) || connectorType === 'Show All') {
+                    $scope.markers.push(createMarkerObject(chargeDevice, index));
+                }
+            }
+        }
+    }
+
+    /**
+     * Parses the 'Connector' property of the charge device and returns a boolean indicating
+     * whether or not the given connector type is present
+     * @param chargeDevice
+     * @param connectorType
+     * @returns boolean
+     */
+    function isConnectorTypeContainedInChargeDevice(chargeDevice, connectorType) {
+        let found = _.filter(chargeDevice.Connector, function(connector){
+            return connectorType === connector.ConnectorType;
+        });
+
+        return found && found.length > 0;
     }
 
     // Promise when Google Maps SDK is fully ready

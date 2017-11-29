@@ -44,10 +44,6 @@ table, td  {
     align-items: center;
 }
 
-.evcl-ng-view-container {
-    flex: 1;
-}
-
 .evcl-border-solid {
     border: 1px solid black;
 }
@@ -141,4 +137,12 @@ table, td  {
 .evcl-about-container {
     padding: 15px;
     color: grey;
+}
+
+.evcl-connector-type-filter {
+    padding: 5px 5px 5px 10px;
+}
+
+.evcl-flex-fill-free-space {
+    flex: 1;
 }

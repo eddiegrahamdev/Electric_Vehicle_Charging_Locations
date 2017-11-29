@@ -1,16 +1,32 @@
 <div class="evcl-full-height evcl-flex">
-    <ui-gmap-google-map class="evcl-full-height"
-                        center='map.center'
-                        zoom='map.zoom'
-                        events="map.events">
-        <ui-gmap-marker
-                ng-repeat="marker in markers"
-                coords="marker.coords"
-                options="marker.options"
-                events="markerEvents"
-                idkey="marker.id">
-        </ui-gmap-marker>
-    </ui-gmap-google-map>
+
+    <div class="evcl-flex-direction-column evcl-flex-fill-free-space">
+
+        <!-- Connector type filter -->
+        <div class="evcl-connector-type-filter">
+            <span>Filter by connector type: </span>
+
+            <select
+                    ng-model="selectedConnectorType"
+                    ng-change="selectedConnectorTypeChange()"
+                    ng-options="connectorType for connectorType in connectorTypes">
+            </select>
+        </div>
+
+        <div class="evcl-flex-fill-free-space">
+            <ui-gmap-google-map center='map.center'
+                                zoom='map.zoom'
+                                events="map.events">
+                <ui-gmap-marker
+                        ng-repeat="marker in markers"
+                        coords="marker.coords"
+                        options="marker.options"
+                        events="markerEvents"
+                        idkey="marker.id">
+                </ui-gmap-marker>
+            </ui-gmap-google-map>
+        </div>
+    </div>
 
     <charging-location-info-pane
             data="selectedChargeDevice"
