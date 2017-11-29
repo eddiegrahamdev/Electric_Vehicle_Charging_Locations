@@ -3,6 +3,10 @@ body {
     height: 100%;
 }
 
+table, td  {
+    padding: 5px;
+}
+
 .angular-google-map,
 .angular-google-map-container {
     width: 100%;
@@ -77,10 +81,6 @@ body {
     background-color: #f1f1f1;
 }
 
-table, td  {
-    padding: 5px;
-}
-
 .evcl-table-border  {
     border: 1px solid grey;
     border-collapse: collapse;
@@ -91,10 +91,15 @@ table, td  {
     border: none;
     color: white;
     padding: 7px;
+    text-decoration: none;
+}
+
+.evcl-button:focus {
+    outline: 0;
 }
 
 .evcl-button:hover {
-    filter: brightness(115%);
+    -webkit-transform: scale(1.03);
 }
 
 .evcl-device-name {
@@ -111,5 +116,29 @@ table, td  {
 .evcl-info-pane-helper-txt {
     padding: 80px;
     text-align: center;
+    color: grey;
+}
+
+.evcl-about-link {
+    margin-left: auto;
+    color: white;
+    text-decoration: none;
+}
+
+.evcl-about-link:hover {
+    -webkit-transform: scale(1.1);
+}
+
+.evcl-home-link {
+    text-decoration: none;
+}
+
+.evcl-home-link:hover {
+    transform-origin: left;
+    -webkit-transform: scale(1.01);
+}
+
+.evcl-about-container {
+    padding: 15px;
     color: grey;
 }

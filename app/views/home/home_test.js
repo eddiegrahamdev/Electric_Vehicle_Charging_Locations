@@ -38,7 +38,7 @@ describe('myApp.home module', function () {
 
     describe('home controller', function () {
 
-        it('should expect controller to be defined', inject(function () {
+        it('should expect home controller to be defined', inject(function () {
             let controller = createController();
 
             httpBackend.expect('GET', 'data/national_charge_point_registry/registry.json')

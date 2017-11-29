@@ -17,34 +17,34 @@
 </head>
 <body>
 
-
-  <!--<ul class="menu">-->
-    <!--<li><a href="#!/view1">view1</a></li>-->
-    <!--<li><a href="#!/view2">view2</a></li>-->
-  <!--</ul>-->
-
   <!-- App container -->
   <div class="evcl-flex-direction-column evcl-full-height">
 
       <!-- Header -->
       <div class="evcl-header-bar evcl-flex-align-center">
-          <img class="evcl-app-icon" src="images/electric_car.png" alt="Mountain View">
-          <span class="evcl-app-title">Electric Vehicle Charging Locations</span>
+          <a href="#!/home" class="evcl-home-link">
+            <img class="evcl-app-icon" src="images/electric_car.png" alt="Mountain View">
+            <span class="evcl-app-title">Electric Vehicle Charging Locations</span>
+          </a>
+
+          <a href="#!/about" class="evcl-about-link">About</a>
       </div>
 
       <!-- Ng view -->
       <div class="evcl-ng-view-container" ng-view></div>
   </div>
 
+  <!-- Libs -->
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="bower_components/lodash/dist/lodash.min.js"></script>
   <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
   <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
 
+  <!-- App components -->
   <script src="app.js"></script>
   <script src="views/home/home.js"></script>
-  <script src="view2/view2.js"></script>
+  <script src="views/about/about.js"></script>
   <script src="components/infoPanel/charging-location-info-pane.js"></script>
 </body>
 </html>

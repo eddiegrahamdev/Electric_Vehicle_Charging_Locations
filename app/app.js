@@ -4,7 +4,7 @@
 angular.module('myApp', [
     'ngRoute',
     'myApp.home',
-    'myApp.view2',
+    'myApp.about',
     'uiGmapgoogle-maps'
 ]).config(['$locationProvider', '$routeProvider', 'uiGmapGoogleMapApiProvider', function ($locationProvider, $routeProvider, uiGmapGoogleMapApiProvider) {
     $locationProvider.hashPrefix('!');
