@@ -20,6 +20,23 @@ angular.module('myApp.home', [
      * Init controller's scope variables, functions and GET charge device data
      */
     function init() {
+        // Full data object
+        $scope.chargeDevices = null;
+        // All markers
+        $scope.markers = null;
+        // User selected charge device data
+        $scope.selectedChargeDevice = null;
+        // User selected marker obj
+        $scope.selectedMarkerObj = null;
+        // User's geolocation
+        $scope.geolocation = null;
+        // Map obj
+        $scope.mapObj = null;
+        // Connector types
+        $scope.connectorTypes = ['Show All'];
+        // Default selected connector type
+        $scope.selectedConnectorType = 'Show All';
+
         // Default map options (Glasgow)
         $scope.map = {
             center: {
@@ -51,22 +68,6 @@ angular.module('myApp.home', [
                 $scope.selectedMarkerObj = marker;
             }
         };
-        // Full data object
-        $scope.chargeDevices = null;
-        // All markers
-        $scope.markers = null;
-        // User selected charge device data
-        $scope.selectedChargeDevice = null;
-        // User selected marker obj
-        $scope.selectedMarkerObj = null;
-        // User's geolocation
-        $scope.geolocation = null;
-        // Map obj
-        $scope.mapObj = null;
-        // Connector types
-        $scope.connectorTypes = ['Show All'];
-        // Default selected connector type
-        $scope.selectedConnectorType = 'Show All';
 
         /**
          * Nullify selected charge device if it does not contain selected connector type.
