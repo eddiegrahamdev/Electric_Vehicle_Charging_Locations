@@ -103,8 +103,8 @@ npm test
 
 ### Browser and Device Compatibility
 
-The app has been smoke testing against the cutting edge versions of Chrome, Edge and firefox.
-The app should also be responsive to devices with smaller viewports. This has been testing using Chrome's native device simulator.
+The app has been smoke tested against the cutting edge versions of Chrome, Edge and Firefox.
+The app should also be responsive to devices with smaller viewports. This has been tested using Chrome's native device simulator.
 
 ## Contact
 
